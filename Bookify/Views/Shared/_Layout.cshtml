@@ -1,50 +1,71 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Bookify</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Bookify.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Bookify</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <!--begin::Fonts(mandatory for all pages)-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/plugins.bundle.css" rel="stylesheet" type="text/css" />
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Bookify - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+</head>
+
+
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed">
+    <!--begin::Theme mode setup on page load-->
+    <script>var defaultThemeMode = "light"; var themeMode; if (document.documentElement) { if (document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if (localStorage.getItem("data-bs-theme") !== null) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+    <!--end::Theme mode setup on page load-->
+    <!--begin::Main-->
+    <!--begin::Root-->
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="page d-flex flex-row flex-column-fluid">
+            <!--begin::Wrapper-->
+            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                <partial name="_Header" />
+                <!--begin::Content wrapper-->
+                <div class="d-flex flex-column-fluid">
+                    <partial name="_Aside" />
+                    <!--begin::Container-->
+                    <div class="d-flex flex-column flex-column-fluid container-fluid">
+                        <div class="content flex-column-fluid" id="kt_content">
+
+                            <main role="main" class="pb-3">
+                                @RenderBody()
+                            </main>
+
+                        </div>
+                    </div>
+
+                    <!--end::Container-->
+                </div>
+                <!--end::Content wrapper-->
+            </div>
+            <!--end::Wrapper-->
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <!--end::Page-->
+    </div>
+    <!--end::Root-->
+    <!--end::Main-->
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <i class="ki-duotone ki-arrow-up">
+            <span class="path1"></span>
+            <span class="path2"></span>
+        </i>
+    </div>
+    <!--end::Scrolltop-->
+    <script>var hostUrl = "assets/";</script>
+    <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+    <script src="~/assets/js/scripts.bundle.js"></script>
+
+    <script src="~/assets/js/plugins.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
