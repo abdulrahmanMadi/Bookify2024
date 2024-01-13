@@ -16,9 +16,10 @@
                     </i>
                 </div>
             </div>
-            Categories</h3>
+            Categories
+        </h3>
         <div class="card-toolbar">
-            <a  class="btn btn-sm btn-primary" asp-controller="Categories" asp-action="Create">
+            <a class="btn btn-sm btn-primary" asp-controller="Categories" asp-action="Create">
 
                 <i class="ki-duotone ki-plus-square text-white">
                     <span class="path1"></span>
@@ -30,14 +31,13 @@
         </div>
     </div>
     <div class="card-body">
-        @if(!Model.Any())
+        @if (!Model.Any())
         {
             <!--begin::Alert-->
             <div class="alert alert-warning d-flex align-items-center p-5">
                 <!--begin::Icon-->
 
                 <i class="ki-duotone ki-information-5 fs-2tx text-danger me-6 "><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>                <!--end::Icon-->
-                   
                 <!--begin::Wrapper-->
                 <div class="d-flex flex-column">
                     <!--begin::Title-->
@@ -50,6 +50,34 @@
                 <!--end::Wrapper-->
             </div>
             <!--end::Alert-->
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-striped gy-7 gs-7">
+                    <thead>
+                        <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Created On</th>
+                            <th>Last Updated On</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.IsDeleted</td>
+                                <td>@item.CreatedOn</td>
+                                <td>@item.LastUpdatedOn</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
         }
     </div>
 
