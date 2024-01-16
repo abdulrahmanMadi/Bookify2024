@@ -11,6 +11,7 @@
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/css/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/animate.css/animate.min.css" rel="stylesheet" />
 
 </head>
 
@@ -59,11 +60,14 @@
         </i>
     </div>
     <!--end::Scrolltop-->
+    <span id="Message" class="d-none">@TempData["Message"]</span>
     <script>var hostUrl = "assets/";</script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
     <script src="~/assets/js/scripts.bundle.js"></script>
-
     <script src="~/assets/js/plugins.bundle.js"></script>
+    <script src="~/assets/js/site.js"></script>
+
+    <script src="~/lib/bootbox.js/bootbox.min.js"></script>
     <!--end::Global Javascript Bundle-->
     @await RenderSectionAsync("Scripts", required: false)
 </body>
