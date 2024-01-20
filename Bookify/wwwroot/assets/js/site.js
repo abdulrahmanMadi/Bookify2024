@@ -43,29 +43,42 @@ $(document).ready(function () {
         showSuccessMessage(message);
     }
 
-    //Handle bootstrap modal
-//    $('body').delegate('.js-render-modal', 'click', function () {
-//        var btn = $(this);
-//        var modal = $('#Modal');
+   // Handle bootstrap modal
+    //$('body').delegate('.js-render-modal', 'click', function () {
+    //    var btn = $(this);
+    //    var modal = $('#Modal');
 
-//        modal.find('#ModalLabel').text(btn.data('title'));
+        //modal.find('#ModalTitle').text(btn.data('title'));
 
-//        if (btn.data('update') !== undefined) {
-//            updatedRow = btn.parents('tr');
-//            console.log(updatedRow);
-//        }
+        //if (btn.data('update') !== undefined) {
+        //    updatedRow = btn.parents('tr');
+        //    console.log(updatedRow);
+        //}
 
-//        $.get({
-//            url: btn.data('url'),
-//            success: function (form) {
-//                modal.find('.modal-body').html(form);
-//                $.validator.unobtrusive.parse(modal);
-//            },
-//            error: function () {
-//                showErrorMessage();
-//            }
-//        });
-
-//        modal.modal('show');
-//    });
+        //$.get({
+        //    url: btn.data('url'),
+        //    success: function (form) {
+        //        modal.find('.modal-body').html(form);
+        //        $.validator.unobtrusive.parse(modal);
+        //    },
+        //    error: function () {
+        //        showErrorMessage();
+        //    }
+        //});
+    $('.js-render-modal').on( 'click', function () {
+        var btn = $(this);
+        var modal = $('#Modal');
+        modal.find('#ModalTitle').text(btn.data('title'));
+        $.get({
+            url: btn.data('url'),
+            success: function (form) {
+                modal.find('.modal-body').html(form);
+                $.validator.unobtrusive.parse(modal);
+            },
+            error: function () {
+                showErrorMessage();
+            }
+        });
+        modal.modal('show');
+    });
 });

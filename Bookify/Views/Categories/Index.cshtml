@@ -19,7 +19,7 @@
             Categories
         </h3>
         <div class="card-toolbar">
-            <a class="btn btn-sm btn-primary" asp-controller="Categories" asp-action="Create">
+            <a href="javascript:;" class="btn btn-sm btn-primary js-render-modal" data-title="Add Category" data-url="/Categories/Create">
 
                 <i class="ki-duotone ki-plus-square text-white">
                     <span class="path1"></span>
@@ -92,9 +92,10 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             <a class="menu-link px-3 js-render-modal"
+                                               href="javascript:;"
                                                data-title="Edit Category"
                                                data-update="true"
-                                               asp-controller="Categories" asp-action="Edit" asp-route-id="@item.id">
+                                               data-url="/Categories/Create/@item.id">
                                                 Edit
                                             </a>
                                         </div>
@@ -123,6 +124,8 @@
 
 @Html.AntiForgeryToken()
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
     <script>
         $(document).ready(function () {
             $('.js-toggle-status').on('click', function () {

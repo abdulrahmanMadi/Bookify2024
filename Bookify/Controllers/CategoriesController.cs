@@ -23,7 +23,7 @@ namespace Bookify.Controllers
         public IActionResult Create()
         {
            
-            return View();
+            return PartialView("Create");
         }
         [HttpPost]
 		[ValidateAntiForgeryToken]
