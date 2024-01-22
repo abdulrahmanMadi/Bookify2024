@@ -1,6 +1,7 @@
 ﻿using Bookify.Core.Models;
 using Bookify.Core.ViewModel;
 using Bookify.Data;
+using Bookify.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,10 +21,12 @@ namespace Bookify.Controllers
 			return View(categories);
 		}
 		[HttpGet]
+        [AjaxOnly]
+
         public IActionResult Create()
         {
            
-            return PartialView("Create");
+            return PartialView("_Form");
         }
         [HttpPost]
 		[ValidateAntiForgeryToken]
@@ -41,6 +44,7 @@ namespace Bookify.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
+        [AjaxOnly]
         public IActionResult Edit(int id)
         {
             var category = _context.Categories.Find(id);
@@ -51,8 +55,7 @@ namespace Bookify.Controllers
                 Id = id,
                 Name = category.Name, 
             };
-
-            return View(CategoryModel);
+            return PartialView(CategoryModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
