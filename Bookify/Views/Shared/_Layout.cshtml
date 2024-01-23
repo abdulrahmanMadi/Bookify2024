@@ -18,10 +18,20 @@
 </head>
 
 
-<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed">
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed page-loading">
+
     <!--begin::Theme mode setup on page load-->
     <script>var defaultThemeMode = "light"; var themeMode; if (document.documentElement) { if (document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if (localStorage.getItem("data-bs-theme") !== null) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
     <!--end::Theme mode setup on page load-->
+    <div class="page-loader flex-column">
+        <img alt="Logo" class="theme-dark-show max-h-50px" src="~/assets/images/keenthemes-dark.svg" />
+        <img alt="Logo" class="theme-light-show max-h-50px" src="~/assets/images/keenthemes.svg" />
+       
+        <div class="d-flex align-items-center mt-5">
+            <span class="spinner-border text-primary" role="status"></span>
+            <span class="text-muted fs-6 fw-semibold ms-5">Loading...</span>
+        </div>
+    </div>
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
@@ -63,7 +73,7 @@
     </div>
     <!--end::Scrolltop-->
     <span id="Message" class="d-none">@TempData["Message"]</span>
-    <partial name="_Modal"/>
+    <partial name="_Modal" />
     <script>var hostUrl = "assets/";</script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
     <script src="~/assets/js/scripts.bundle.js"></script>

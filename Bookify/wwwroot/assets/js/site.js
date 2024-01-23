@@ -25,6 +25,7 @@ function showErrorMessage(message = 'Something went wrong!') {
 }
 
 function onModalSuccess() {
+    console.log("onModalSuccess");
     showSuccessMessage();
     $('#Modal').modal('hide');
     if (updatedRow === undefined) {
@@ -139,6 +140,8 @@ $(document).ready(function () {
     KTUtil.onDOMContentLoaded(function () {
         KTDatatables.init();
     });
+    
+
    // Handle bootstrap modal
     $('body').delegate('.js-render-modal', 'click', function () {
         var btn = $(this);
@@ -176,5 +179,49 @@ $(document).ready(function () {
     //        }
     //    });
         modal.modal('show');
+    });
+    //Toggle Status
+    $('.js-toggle-status').on('click', function () {
+        var btn = $(this);
+        bootbox.confirm({
+            title: 'Delete item',
+            message: 'Are you sure to delete this item?',
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> Cancel',
+                    className: 'btn-success'
+
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> Confirm',
+                    className: 'btn-danger'
+
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.post({
+                        url: btn.data('url'),
+                        data: {
+                            '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (lastUpdatedOn) {
+                            var row = btn.parents('tr');
+                            var status = row.find('.js-status');
+                            var newStatus = status.text().trim() === 'Deleted' ? 'Available' : 'Deleted';
+                            status.text(newStatus).toggleClass('badge-light-success badge-light-danger');
+                            row.find('.js-updated-on').html(lastUpdatedOn);
+                            row.addClass('animated flash');
+
+                            showSuccessMessage();
+                        },
+                        error: function () {
+                            showErrorMessage();
+                        }
+                    });
+                }
+            }
+        });
+
     });
 });
