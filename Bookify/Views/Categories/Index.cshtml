@@ -96,7 +96,7 @@
 
     </div>
    
-<div class="card-body">
+<div class="card-body pt-0">
     @if (!Model.Any())
     {
         <!--begin::Alert-->
@@ -120,14 +120,14 @@
     else
     {
         <div class="table-responsive">
-            <table class="table table-striped gy-7 gs-7">
+                <table  class="table table-striped gy-7 gs-7 js-DataTables" data-document-title="Categories Document">
                 <thead>
                     <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
                         <th>Name</th>
                         <th>Status</th>
                         <th>Created On</th>
                         <th>Last Updated On</th>
-                        <th>Action</th>
+                        <th class="print-no-columns">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -151,10 +151,10 @@
     <script src="~/assets/js/datatables.bundle.js"></script>
 }
 @section Scripts {
+
     <partial name="_ValidationScriptsPartial" />
     <script>
         $(document).ready(function () {
-            $(".table").DataTable();
             $('.js-toggle-status').on('click', function () {
                 var btn = $(this);
                 bootbox.confirm({

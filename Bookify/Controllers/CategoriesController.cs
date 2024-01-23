@@ -55,7 +55,7 @@ namespace Bookify.Controllers
                 Id = id,
                 Name = category.Name, 
             };
-            return PartialView(CategoryModel);
+            return PartialView("_Form",CategoryModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
