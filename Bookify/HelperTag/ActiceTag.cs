@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Bookify.HelperTag
 {
-    [HtmlTargetElement("a",Attributes="Active-When")]
-    public class ActiceTag:TagHelper
+    [HtmlTargetElement("a", Attributes = "Active-When")]
+    public class ActiceTag : TagHelper
     {
         public string? ActiveWhen { get; set; }
         [ViewContext]
@@ -31,6 +31,6 @@ namespace Bookify.HelperTag
             }
         }
     }
-   
-    
+
+
 }

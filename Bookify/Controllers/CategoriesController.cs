@@ -1,65 +1,45 @@
-﻿using Bookify.Core.Models;
-using Bookify.Core.ViewModel;
-using Bookify.Data;
-using Bookify.Filters;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿
 
 namespace Bookify.Controllers
 {
-	public class CategoriesController : Controller
-	{
-		private readonly ApplicationDbContext _context;
+    public class CategoriesController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-		public CategoriesController(ApplicationDbContext context)
-		{
-			_context = context;
-		}
-		public IActionResult Index()
-		{
-			var categories = _context.Categories.AsNoTracking().Select(
-                x=> new CategoryViewModel 
-                {
-                    id=x.id,
-                    Name=x.Name,
-                    IsDeleted=x.IsDeleted,
-                    CreatedOn=x.CreatedOn,
-                    LastUpdatedOn = x.LastUpdatedOn
-                }
-                ).ToList();
-			return View(categories);
-		}
-		[HttpGet]
+
+        public CategoriesController(ApplicationDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+        public IActionResult Index()
+        {
+            var categories = _context.Categories.AsNoTracking().ToList();
+            var viewModel = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
+            return View(viewModel);
+        }
+        [HttpGet]
         [AjaxOnly]
 
         public IActionResult Create()
         {
-           
+
             return PartialView("_Form");
         }
         [HttpPost]
-		[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(CategoryFormViewModel model)
         {
-			if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(model);
-			var category = new Category
-			{
-				Name = model.Name,
-			};
-            var viewModel = new CategoryViewModel
-            {
+            var category = _mapper.Map<Category>(model);
 
-                id = category.id,
-                Name = category.Name,
-                IsDeleted = category.IsDeleted,
-                CreatedOn = category.CreatedOn,
-                LastUpdatedOn = category.LastUpdatedOn
 
-            };
-			_context.Categories.Add(category);
-			_context.SaveChanges();
+            var viewModel = _mapper.Map<CategoryViewModel>(category);
+
+            _context.Add(category);
+            _context.SaveChanges();
             TempData["Message"] = "Item Created Successfuly!";
             return RedirectToAction("Index", viewModel);
         }
@@ -70,13 +50,14 @@ namespace Bookify.Controllers
             var category = _context.Categories.Find(id);
             if (category == null)
                 return NotFound();
-            var CategoryModel= new CategoryFormViewModel 
-            {
-                Id = id,
-                Name = category.Name, 
-            };
+            //var CategoryModel = new CategoryFormViewModel
+            //{
+            //    Id = id,
+            //    Name = category.Name,
+            //};
+            var CategoryModel = _mapper.Map<CategoryFormViewModel>(category);
 
-            return PartialView("_Form",CategoryModel);
+            return PartialView("_Form", CategoryModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -87,20 +68,14 @@ namespace Bookify.Controllers
             var category = _context.Categories.Find(model.Id);
             if (category == null)
                 return NotFound();
-            category.Name = model.Name;
-            category.LastUpdatedOn=DateTime.Now;
+            //   category.Name = model.Name;
+            category = _mapper.Map(model, category);
+
+            category.LastUpdatedOn = DateTime.Now;
             _context.SaveChanges();
             TempData["Message"] = "Item Updated Successfuly!";
-            var viewModel = new CategoryViewModel
-            {
+            var viewModel = _mapper.Map<CategoryViewModel>(category);
 
-                id = category.id,
-                Name = category.Name,
-                IsDeleted = category.IsDeleted,
-                CreatedOn = category.CreatedOn,
-                LastUpdatedOn = category.LastUpdatedOn
-
-            };
             return RedirectToAction("Index", viewModel);
         }
 
@@ -113,14 +88,14 @@ namespace Bookify.Controllers
             if (category == null)
                 return NotFound();
             category.IsDeleted = !category.IsDeleted;
-            category.LastUpdatedOn=DateTime.Now;
+            category.LastUpdatedOn = DateTime.Now;
 
             _context.SaveChanges();
             return Ok(category.LastUpdatedOn.ToString());
         }
         public IActionResult AllowItem(CategoryFormViewModel model)
         {
-            var IsExist = _context.Categories.SingleOrDefault(x=>x.Name ==model.Name);
+            var IsExist = _context.Categories.SingleOrDefault(x => x.Name == model.Name);
             var isAllowed = IsExist is null || IsExist.id.Equals(model.Id);
             return Json(isAllowed);
         }

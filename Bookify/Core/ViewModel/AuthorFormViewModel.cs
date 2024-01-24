@@ -3,7 +3,7 @@ using Bookify.Core.Consts;
 
 namespace Bookify.Core.ViewModel
 {
-    public class CategoryFormViewModel
+    public class AuthorFormViewModel
     {
         public int Id { get; set; }
         [MaxLength(150, ErrorMessage = Error.MaxLength), Display(Name = "Category")]

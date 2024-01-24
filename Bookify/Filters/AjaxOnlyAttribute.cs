@@ -7,7 +7,7 @@ namespace Bookify.Filters
     {
         public override bool IsValidForRequest(RouteContext routeContext, ActionDescriptor action)
         {
-            var IsAjax = routeContext.HttpContext.Request.Headers["x-requested-with"]=="XMLHttpRequest";
+            var IsAjax = routeContext.HttpContext.Request.Headers["x-requested-with"] == "XMLHttpRequest";
             return IsAjax;
 
         }

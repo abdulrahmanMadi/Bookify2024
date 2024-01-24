@@ -1,7 +1,7 @@
 ﻿var updatedRow;
 var table;
 var datatable;
-var exportedCols=[];
+var exportedCols = [];
 function showSuccessMessage(message = 'Done successfully!') {
     Swal.fire({
         icon: 'success',
@@ -25,7 +25,6 @@ function showErrorMessage(message = 'Something went wrong!') {
 }
 
 function onModalSuccess() {
-    console.log("onModalSuccess");
     showSuccessMessage();
     $('#Modal').modal('hide');
     if (updatedRow === undefined) {
@@ -47,7 +46,6 @@ var KTDatatables = function () {
     var initDatatable = function () {
         datatable = $(table).DataTable({
             "info": false,
-            'order': [],
             'pageLength': 10,
         });
     }
@@ -70,7 +68,7 @@ var KTDatatables = function () {
                     title: documentTitle,
                     exportOptions: {
                         columns: exportedCols
-                    
+
                     }
                 },
                 {
@@ -140,9 +138,9 @@ $(document).ready(function () {
     KTUtil.onDOMContentLoaded(function () {
         KTDatatables.init();
     });
-    
 
-   // Handle bootstrap modal
+
+    // Handle bootstrap modal
     $('body').delegate('.js-render-modal', 'click', function () {
         var btn = $(this);
         var modal = $('#Modal');
@@ -151,7 +149,6 @@ $(document).ready(function () {
 
         if (btn.data('update') !== undefined) {
             updatedRow = btn.parents('tr');
-            console.log(updatedRow);
         }
 
         $.get({
@@ -164,20 +161,7 @@ $(document).ready(function () {
                 showErrorMessage();
             }
         });
-    //$('.js-render-modal').on( 'click', function () {
-    //    var btn = $(this);
-    //    var modal = $('#Modal');
-    //    modal.find('#ModalTitle').text(btn.data('title'));
-    //    $.get({
-    //        url: btn.data('url'),
-    //        success: function (form) {
-    //            modal.find('.modal-body').html(form);
-    //            $.validator.unobtrusive.parse(modal);
-    //        },
-    //        error: function () {
-    //            showErrorMessage();
-    //        }
-    //    });
+
         modal.modal('show');
     });
     //Toggle Status
