@@ -2,6 +2,7 @@
 var table;
 var datatable;
 var exportedCols = [];
+
 function showSuccessMessage(message = 'Done successfully!') {
     Swal.fire({
         icon: 'success',
@@ -134,6 +135,29 @@ $(document).ready(function () {
     if (message !== '') {
         showSuccessMessage(message);
     }
+    //TinyMCE
+    tinymce.init({
+        selector: ".js-TinyMce", height: "466"
+    });
+    $.validator.setDefaults({
+        ignore: []
+    });
+    //Datepicker
+    $(".js-Datepicker").daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        drops:"up"
+    });
+
+    //$(".js-Datepicker").flatpickr({
+    //    enableTime: true,
+    //});
+
+   
+    //Select2
+    $(".js-select2").select2({
+        //   placeholder:"Select Category",
+    });
     // DataTables
     KTUtil.onDOMContentLoaded(function () {
         KTDatatables.init();

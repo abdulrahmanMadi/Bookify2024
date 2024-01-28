@@ -19,102 +19,26 @@
 
 </div>
 <div class="card shadow-sm">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card-body ">
-                <form method="post" asp-controller="Books" enctype="multipart/form-data">
+    <form method="post" asp-controller="Books" enctype="multipart/form-data">
+        <div class="row">
+                <div class="card-body ">
                     @if (Model.Id > 0)
                     {
                         <input type="hidden" asp-for="Id" />
                     }
                     <div class="mb-7">
-
-                        <div class="form-floating mb-2">
-                            <input type="text" class="form-control" placeholder="Title" asp-for="Title" />
-                            <label asp-for="Title"></label>
-                        </div>
-                        <span asp-validation-for="Title" class="text-danger d-block"> </span>
-                    </div>
-                    <div class="mb-7">
-                        <div class="input-group input-group-solid flex-nowrap">
-                            <span class="input-group-text">
-                                <i class="ki-duotone ki-abstract-30  fs-3">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                            </span>
-                            <div class="overflow-hidden flex-grow-1">
-                                <select class="form-select form-select-solid rounded-start-0 border-start" data-control="select2" data-placeholder="Category" asp-for="SelectedCatgegories" asp-items="@Model.Catgegories">
-
-                                    <option>Select Catgegory</option>
-
-                                </select>
-                            </div>
-                        </div>
-                        <span asp-validation-for="SelectedCatgegories" class="text-danger d-block"> </span>
-                    </div>
-                    <div class="mb-7">
-                        <div class="input-group input-group-solid flex-nowrap">
-                            <span class="input-group-text">
-                                <i class="ki-duotone ki-address-book fs-3">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                </i>
-                            </span>
-                            <div class="overflow-hidden flex-grow-1">
-                                <select class="form-select form-select-solid rounded-start-0 border-start" data-control="select2" data-placeholder="Authors" asp-for="AuthorId" asp-items="@Model.Authors">
-                                    <option value="">Select Author</option>
-
-                                </select>
-                            </div>
-                        </div>
-                        <span asp-validation-for="AuthorId" class="text-danger d-block"> </span>
-                    </div>
-                    <div class="mb-7">
-
-                        <div class="form-floating mb-2">
-                            <input type="text" class="form-control" placeholder="Publisher" asp-for="Publisher" />
-                            <label asp-for="Publisher"></label>
-                        </div>
-                        <span asp-validation-for="Publisher" class="text-danger d-block"> </span>
-                    </div>
-                    <div class="mb-7">
-
-                        <div class="form-floating mb-2">
-                            <input type="date" class="form-control" placeholder="Publishing Date" asp-for="PublishingDate" />
-                            <label asp-for="PublishingDate"></label>
-                        </div>
-                        <span asp-validation-for="PublishingDate" class="text-danger d-block"> </span>
-                    </div>
-                    <div class="mb-7">
-                @*         <style>
-                            .image-input-placeholder {
-                                background-image: url('../images/books/no-cover_en.jpg');
-                            }
-
-                            [data-bs-theme="dark"] .image-input-placeholder {
-                                background-image: url('../images/books/no-cover_en.jpg');
-                            }
-                        </style>
-                        <div class="image-input image-input-empty" data-kt-image-input="true" style="background-image: url('../images/books/no-cover_en.jpg');">
+                    <div class="image-input image-input-empty" data-kt-image-input="true" style="background-image: url('/images/@(string.IsNullOrEmpty(Model.ImageUrl) ? "no-cover_en.jpg" : $"/Books/{Model.ImageUrl}")');">
                             <div class="image-input-wrapper w-125px h-125px"></div>
                             <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
                                    data-kt-image-input-action="change"
-                                   data-bs-toggle="tooltip"
-                                   data-bs-dismiss="click"
-                                   title="Change avatar">
+                                   data-bs-dismiss="click">
                                 <i class="ki-duotone ki-pencil fs-6"><span class="path1"></span><span class="path2"></span></i>
-                        <input type="file" class="d-none" placeholder="Image" asp-for="Image" accept=".jpg,.png,.jpeg" />
-
-                                <input type="file"  name="avatar"  accept=".png, .jpg, .jpeg" />
+                                <input type="file" asp-for="Image" accept=".png, .jpg, .jpeg" />
                                 <input type="hidden" name="avatar_remove" />
                             </label>
                             <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
                                   data-kt-image-input-action="cancel"
-                                  data-bs-toggle="tooltip"
-                                  data-bs-dismiss="click"
-                                  title="Cancel avatar">
+                                  data-bs-dismiss="click">
                                 <i class="ki-outline ki-cross fs-3"></i>
                             </span>
                             <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -125,52 +49,109 @@
                                 <i class="ki-outline ki-cross fs-3"></i>
                             </span>
                         </div>
-                        <span asp-validation-for="Image" class="text-danger d-block"> </span> *@
-
-
-
-                          <div class="form-floating mb-2">
-                            <input type="file" class="form-control" placeholder="Image" asp-for="Image" accept=".jpg,.png,.jpeg" />
-                        <label asp-for="Image"></label>
-                        </div>
                         <span asp-validation-for="Image" class="text-danger d-block"> </span>
                     </div>
-                    <div class="mb-7">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="mb-7">
+                                <div class="form-floating mb-2">
+                                    <input type="text" class="form-control" placeholder="Title" asp-for="Title" />
+                                    <label asp-for="Title"></label>
+                                </div>
+                                <span asp-validation-for="Title" class="text-danger d-block"> </span>
+                            </div>
+                            <div class="mb-7">
+                                <div class="input-group input-group-solid flex-nowrap">
+                                    <span class="input-group-text">
+                                        <i class="ki-duotone ki-abstract-30  fs-3">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </span>
+                                    <div class="overflow-hidden flex-grow-1">
+                                        <select class="form-select form-select-solid rounded-start-0 border-start js-select2" data-control="select2" data-placeholder="Select Category" asp-for="SelectedCatgegories" asp-items="@Model.Catgegories">
+                                            <option>Select Catgegory</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="SelectedCatgegories" class="text-danger d-block"> </span>
+                            </div>
+                            <div class="mb-7">
+                                <div class="input-group input-group-solid flex-nowrap">
+                                    <span class="input-group-text">
+                                        <i class="ki-duotone ki-address-book fs-3">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                        </i>
+                                    </span>
+                                    <div class="overflow-hidden flex-grow-1">
+                                        <select class="form-select form-select-solid rounded-start-0 border-start" data-control="select2" data-placeholder="Select An Authors" asp-for="AuthorId" asp-items="@Model.Authors">
+                                            <option value="">Select An Author</option>
 
-                        <div class="form-floating mb-2">
-                            <input type="text" class="form-control" placeholder="Hall" asp-for="Hall" />
-                            <label asp-for="Hall"></label>
+                                        </select>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="AuthorId" class="text-danger d-block"> </span>
+                            </div>
+                            <div class="mb-7">
+
+                                <div class="form-floating mb-2">
+                                    <input type="text" class="form-control" placeholder="Publisher" asp-for="Publisher" />
+                                    <label asp-for="Publisher"></label>
+                                </div>
+                                <span asp-validation-for="Publisher" class="text-danger d-block"> </span>
+                            </div>
+                            <div class="mb-7">
+                                <div class="mb-0">
+                                    <label asp-for="PublishingDate" class="form-label"></label>
+                                    <input type="text" asp-for="PublishingDate" class="form-control form-control-solid js-Datepicker" placeholder="Pick date & time" id="kt_datepicker_3" />
+                                </div>
+                                <span asp-validation-for="PublishingDate" class="text-danger d-block"> </span>
+                            </div>
+                        <div class="mb-7">
+
+                            <div class="form-check form-switch mb-4">
+                                <input class="form-check-input" type="checkbox" asp-for="IsAvailableForRental" />
+                                <label class="form-check-label" asp-for="IsAvailableForRental">
+
+                                </label>
+                            </div>
+                            <span asp-validation-for="IsAvailableForRental" class="text-danger d-block"> </span>
                         </div>
-                        <span asp-validation-for="Hall" class="text-danger d-block"> </span>
-                    </div>
-                    <div class="mb-7">
+                            <div class="mb-7">
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" asp-for="IsAvailableForRental" />
-                            <label class="form-check-label" asp-for="IsAvailableForRental">
-
-                            </label>
+                                <div class="form-floating mb-2">
+                                    <input type="text" class="form-control" placeholder="Hall" asp-for="Hall" />
+                                    <label asp-for="Hall"></label>
+                                </div>
+                                <span asp-validation-for="Hall" class="text-danger d-block"> </span>
+                            </div>
+                          
                         </div>
-                        <span asp-validation-for="IsAvailableForRental" class="text-danger d-block"> </span>
+                        <div class="col-md-7">
+                            <div class="mb-7">
+                                <textarea asp-for="Description" placeholder="Description" class="form-control js-TinyMce" data-kt-autosize="true"></textarea>
+                                <span asp-validation-for="Description" class="text-danger d-block"> </span>
+                            </div>
+                            <br>
 
+                           
+                        </div>
+                   
                     </div>
-                    <div class="mb-7">
-
-                        <label asp-for="Description" class="form-label"></label>
-                        <textarea asp-for="Description" class="form-control " data-kt-autosize="true"></textarea>
-                        <span asp-validation-for="Description" class="text-danger d-block"> </span>
+                <div class="modal-footer  justify-content-between ">
+                    <button type="submit" class="btn btn-primary ">Save</button>
                     </div>
-                    <br> <br> <br>
-
-                    <div class="modal-footer ">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>
+          
+
+    </form>
 </div>
 @section Scripts
 {
+    <script src="~/assets/plugins/tinymce/tinymce.bundle.js"></script>
+
     <partial name="_ValidationScriptsPartial" />
 }

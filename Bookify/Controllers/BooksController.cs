@@ -111,7 +111,7 @@ namespace Bookify.Controllers
 
                 if (!string.IsNullOrEmpty(model.ImageUrl))
                 {
-                    var oldImage=Path.Combine($"{_webHostEnvironment.WebRootPath}/Images/Books", books.ImageUrl!);
+                    var oldImage=Path.Combine($"{_webHostEnvironment.WebRootPath}/Images/Books/", books.ImageUrl!);
                     if (System.IO.File.Exists(oldImage))
                         System.IO.File.Delete(oldImage);
                     

@@ -21,7 +21,7 @@ namespace Bookify.Core.ViewModel
 		[MaxLength(50, ErrorMessage = Error.MaxLength)]
 
 		public string Hall { get; set; } = null!;
-		[Display(Name = "Is available for rental ?")]
+		[Display(Name = "Is Available For Rental ?")]
 
 		public bool IsAvailableForRental { get; set; }
 
