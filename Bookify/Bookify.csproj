@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-Bookify-e5049213-f5d7-4253-9898-c432b8178fec</UserSecretsId>
+    <UserSecretsId>e5049213-f5d7-4253-9898-c432b8178fec</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +17,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="SixLabors.ImageSharp.Web" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +25,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Books\Thumb\" />
   </ItemGroup>
 
 </Project>
