@@ -76,12 +76,15 @@
     <partial name="_Modal" />
     <script>var hostUrl = "assets/";</script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="~/assets/js/scripts.bundle.js"></script>
     <script src="~/assets/js/plugins.bundle.js"></script>
+    <script src="~/assets/js/scripts.bundle.js"></script>
     <script src="~/lib/bootbox.js/bootbox.min.js"></script>
-    <script src="~/assets/js/site.js"></script>
+
     @await RenderSectionAsync("Plugins", required: false)
+    <script src="~/assets/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
 

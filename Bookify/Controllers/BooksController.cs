@@ -32,6 +32,15 @@ namespace Bookify.Controllers
 		{
 			return View();
 		}
+        [AjaxOnly]
+        public IActionResult GetBooks()
+        {
+            IQueryable<Book> Books = _context.Books;
+            var data= Books.Skip(0).Take(10).ToList();
+            var recoedsTotal=Books.Count();
+            var jsonData = new { recoedFilter = recoedsTotal, recoedsTotal, data };
+            return View(jsonData);
+        }
         public IActionResult Details(int id)
         {
             var book = _context.Books
