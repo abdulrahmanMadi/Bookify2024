@@ -1,0 +1,78 @@
+﻿
+@model BookViewModel
+<tr>
+    <td class="d-flex align-items-center">
+        <div class="symbol  symbol-50px overflow-hidden me-3">
+            <a asp-action="Details" asp-route-id="@Model.Id">
+                <div class="h-70  ">
+                    <img src="@(Model.ImageThumbUrl is null ? "/images/no-cover_en.jpg" : Model.ImageThumbUrl ) " alt="cover" class="w-100 ">
+                </div>
+            </a>
+
+        </div>
+        <div class="d-flex flex-column">
+               <a asp-action="Details" asp-route-id="@Model.Id">
+            <div  class="text-primary fw-bolder">@Model.Title</div>
+            </a>
+
+            <span>@Model.Author</span>
+        </div>
+    </td>
+    <td>
+        <div class="">@Model.Publisher</div>
+
+    </td>
+    <td>
+        <div class="">@Model.PublishingDate.ToString("dd MMM,yyyy")</div>
+
+    </td>
+    <td>
+        <div class="">@Model.Hall</div>
+
+    </td>
+    <td>
+        
+        <div class="">
+            @foreach (var category in Model.Categories)
+            {
+                <span class="px-1">
+                    @category 
+                </span>
+            }
+            
+           </div>
+
+    </td>
+    <td>
+        <span class="badge badge-light-@(Model.IsAvailableForRental? "success" :"warning")">@(Model.IsAvailableForRental ? "Available" : "Unavailable")</span>
+
+    </td>
+    <td>
+        <span class=" js-status badge badge-light-@(Model.IsDeleted?  "danger":"success")">@(Model.IsDeleted ? "Deleted" : "Available")</span>
+
+    </td>
+    <td class="text-end  px-2 ">
+
+        <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm " data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+            Actions
+            <i class="ki-duotone ki-down fs-5 ms-1"></i>
+        </a>
+        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3 " data-kt-menu="true" style="">
+            <div class="menu-item px-3">
+                <a 
+                   class="menu-link px-3 "
+                  
+                  href="/Books/Edit/@Model.Id">
+                    Edit
+                </a>
+            </div>
+
+            <div class="menu-item px-3">
+                <a href="javascript:;" class="menu-link flex-stack px-3 js-toggle-status" data-url="/Books/ToggleStatus/@Model.Id">
+                    Toggle Status
+                </a>
+            </div>
+        </div>
+
+    </td>
+</tr>

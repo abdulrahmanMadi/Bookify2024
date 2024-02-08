@@ -2,7 +2,9 @@
 @{
     ViewData["Title"] = Model?.Title;
 }
-
+@section Styles {
+    <link href="~/assets/css/datatables.bundle.css" rel="stylesheet" />
+}
 <div class="d-flex flex-column flex-column-fluid container-fluid">
     <div class="toolbar mb-5 mb-lg-7" id="kt_toolbar">
         <div class="page-title d-flex flex-column me-3">
@@ -33,13 +35,14 @@
                                     <a href="#" class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">@Model!.Title</a>
                                     <span class="badge badge-light-@(Model.IsDeleted? "danger": Model.IsAvailableForRental?"success":"warning") me-auto">@(Model.IsDeleted ? "Deleted" : Model.IsAvailableForRental ? "Available For Rental" : "Not Available For Rental")</span>
                                 </div>
-                               
+
                                 <div class="d-flex flex-wrap fw-semibold mb-3 fs-5 text-gray-400 ">
                                     <i class="ki-duotone ki-pencil mt-2 ">
                                         <span class="path1"></span>
                                         <span class="path2"></span>
                                     </i>
-                                    <span class="ms-2 text-primary">@Model.Author</span></div>
+                                    <span class="ms-2 text-primary">@Model.Author</span>
+                                </div>
                                 <div class="d-flex flex-wrap  mb-4 fs-7 text-gray-400">@Model.Publisher</div>
                             </div>
                             <div class="d-flex mb-4">
@@ -73,7 +76,7 @@
                                 <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                     <div class="d-flex align-items-center">
                                         <i class="ki-duotone ki-copy fs-2 text-primary"></i>
-                                        <div class="fs-4 fw-bold counted px-2" data-kt-countup="true" data-kt-countup-value="150">150</div>
+                                        <div class="fs-4 fw-bold counted px-2" data-kt-countup="true" data-kt-countup-value="@(Model.Copies is null ? "0" : Model.Copies.Count())">@(Model.Copies is null ? "0" : Model.Copies.Count())</div>
                                     </div>
 
                                     <div class="fw-semibold fs-6 text-gray-500">Copies</div>
@@ -81,7 +84,10 @@
 
                             </div>
                             <div class="align-self-end pb-3">
-                                @foreach (var category in Model.Catgegories)
+
+
+
+                                @foreach (var category in Model.Categories)
                                 {
                                     <span class="badge badge-light-info me-auto">
                                         @category
@@ -97,7 +103,7 @@
                         <a class="nav-link text-active-primary active py-5 me-6" data-bs-toggle="tab" href="#Description">Overview</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-active-primary py-5 me-6" data-bs-toggle="tab" href="#Copies">Targets</a>
+                        <a class="nav-link text-active-primary py-5 me-6" data-bs-toggle="tab" href="#Copies">Copies</a>
                     </li>
                 </ul>
             </div>
@@ -113,37 +119,66 @@
             </div>
         </div>
         <div class="tab-content">
-            <div id="Copies" class="card tab-pane fade  ">
+            <div id="Copies" class="card tab-pane fade">
+                <!--begin::Card header-->
                 <div class="card-header">
-                    <div class="card-title fs-3 fw-bold">Project Copies</div>
+                    <!--begin::Card title-->
+                    <div class="card-title fs-3 fw-bold">Copies</div>
+                    <!--end::Card title-->
+                    <div class="card-toolbar">
+                        <a href="javascript:;" class="btn btn-sm btn-primary js-render-modal"
+                           data-title="Add Copy" data-url="/BookCopies/Create?bookId=@Model.Id">
+                            <i class="bi bi-plus-square-dotted"></i>
+                            Add
+                        </a>
+                    </div>
                 </div>
+                <!--end::Card header-->
                 <div class="card-body">
-                    <h1> Copies</h1>
+                    <div class="@(Model.Copies.Any() ? "d-none" : string.Empty) alert alert-dismissible bg-light-warning border border-warning border-3 border-dashed d-flex flex-column flex-sm-row w-100 p-5 mb-10 js-alert">
+                        <div class="alert alert-warning d-flex align-items-center p-5">
+
+                            <i class="ki-duotone ki-information-5 fs-2tx text-danger me-6 "><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>                <!--end::Icon-->
+                            <div class="d-flex flex-column">
+                                <h4 class="mb-1 text-dark">No Copies Found !</h4>
+
+                                <span> Copies item is not Found !</span>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="@(Model.Copies.Any() ? string.Empty : "d-none") table table-row-dashed table-row-gray-300 gy-2 align-middle">
+                        <thead>
+                            <tr class="fw-bold fs-6 text-gray-400 text-uppercase">
+                                <th>Serial Number</th>
+                                <th>Edition</th>
+                                <th>Rental?</th>
+                                <th>Status</th>
+                                <th>Created On</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var copy in Model.Copies.OrderByDescending(c => c.Id))
+                            {
+                                <partial name="_BookCopyRow" model="@copy" />
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="footer py-4 d-flex flex-column flex-md-row flex-stack" id="kt_footer">
-        <div class="text-gray-900 order-2 order-md-1">
-            <span class="text-muted fw-semibold me-1">2023&copy;</span>
-            <a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">Keenthemes</a>
         </div>
 
-        <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-            <li class="menu-item">
-                <a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
-            </li>
-            <li class="menu-item">
-                <a href="https://devs.keenthemes.com" target="_blank" class="menu-link px-2">Support</a>
-            </li>
-            <li class="menu-item">
-                <a href="https://1.envato.market/EA4JP" target="_blank" class="menu-link px-2">Purchase</a>
-            </li>
-        </ul>
     </div>
-</div>
-@section Plugins
-{
+
+@Html.AntiForgeryToken()
+@section Plugins {
+    <script src="~/assets/js/datatables.bundle.js"></script>
     <script src="~/assets/js/fslightbox.bundle.js"></script>
+
+}
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
 }

@@ -13,20 +13,22 @@ namespace Bookify.Core.Mapping
                 .ForMember(dest=>dest.Value,opt=>opt.MapFrom(src=>src.id))
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name));
 
-
-
 			//Author
 			CreateMap<Author, AuthorViewModel>();
             CreateMap<AuthorFormViewModel, Author>().ReverseMap();
             CreateMap<Author, SelectListItem>()
 				.ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.id))
 				.ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name));
+
 			//Book
 			CreateMap<BookFormViewModel, Book>().ReverseMap()
-                .ForMember(dest => dest.Catgegories, opt => opt.Ignore());
+                .ForMember(dest => dest.Categories, opt => opt.Ignore());
 			CreateMap<Book, BookViewModel>()
 				.ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Author!.Name))
-            	.ForMember(dest => dest.Catgegories, opt => opt.MapFrom(src => src.Catgegories!.Select(x=>x.Category!.Name).ToList()));
+            	.ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories!.Select(x=>x.Category!.Name).ToList()));
+
+			CreateMap<BookCopy, BookCopyViewModel>()
+				.ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book!.Title));
 
 
 		}

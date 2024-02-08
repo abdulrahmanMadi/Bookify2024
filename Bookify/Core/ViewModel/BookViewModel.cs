@@ -13,8 +13,10 @@
         public bool IsAvailableForRental { get; set; }
         //Author
         public string Author { get; set; } = null!;
-        public IEnumerable<string> Catgegories { get; set; } = null!;
-        public bool IsDeleted { get; set; }
+        public IEnumerable<string> Categories { get; set; } = null!;
+		public IEnumerable<BookCopyViewModel> Copies { get; set; } = null!;
+
+		public bool IsDeleted { get; set; }
         public DateTime CreatedOn { get; set; } 
 
     }

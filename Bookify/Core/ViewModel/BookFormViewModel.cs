@@ -38,7 +38,7 @@ namespace Bookify.Core.ViewModel
         //Catgegories
         [Display(Name = "Catgegories")]
         public IList<int> SelectedCatgegories { get; set; } = new List<int>();
-		public IEnumerable<SelectListItem>? Catgegories { get; set; }
+		public IEnumerable<SelectListItem>? Categories { get; set; }
 
 	}
 }

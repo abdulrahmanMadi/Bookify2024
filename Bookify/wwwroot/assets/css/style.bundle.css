@@ -45669,11 +45669,15 @@ code:not([class*=language-]) {
         width: 50px;
         height: 50px
     }
-
+    .h-70  {
+        width: 50px;
+        height: 70px
+    }
     .symbol.symbol-50px .symbol-label {
         width: 50px;
         height: 50px
     }
+  
 
     .symbol.symbol-50px.symbol-fixed .symbol-label {
         width: 50px;

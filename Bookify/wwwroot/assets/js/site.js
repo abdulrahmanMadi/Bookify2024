@@ -52,6 +52,7 @@ var KTDatatables = function () {
         datatable = $(table).DataTable({
             "info": false,
             'pageLength': 10,
+            stateSave: true
         });
     }
     // Hook export buttons

@@ -4,6 +4,7 @@ using Bookify.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookify.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240208155852_AddBookCopies")]
+    partial class AddBookCopies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,7 +168,7 @@ namespace Bookify.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("Copies");
+                    b.ToTable("BookCopies");
                 });
 
             modelBuilder.Entity("Bookify.Core.Models.Category", b =>
@@ -433,7 +436,7 @@ namespace Bookify.Data.Migrations
             modelBuilder.Entity("Bookify.Core.Models.BookCopy", b =>
                 {
                     b.HasOne("Bookify.Core.Models.Book", "Book")
-                        .WithMany("Copies")
+                        .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -495,8 +498,6 @@ namespace Bookify.Data.Migrations
             modelBuilder.Entity("Bookify.Core.Models.Book", b =>
                 {
                     b.Navigation("Categories");
-
-                    b.Navigation("Copies");
                 });
 
             modelBuilder.Entity("Bookify.Core.Models.Category", b =>
